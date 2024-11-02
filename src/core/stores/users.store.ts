@@ -18,6 +18,7 @@ export interface UserModel {
 
 const userModel: UserModel = {
   users: [],
+
   setUsers: action((state, users) => {
     state.users = users;
   }),
@@ -34,7 +35,7 @@ const userModel: UserModel = {
   }),
 
   updateUser: thunk(async (actions, updatedUser, { getState }) => {
-    await updateUser(updatedUser.id, updatedUser);
+    await updateUser(updatedUser);
     const currentUsers = getState().users;
     actions.setUsers(
       currentUsers.map((user) =>

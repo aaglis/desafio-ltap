@@ -8,13 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useStoreState } from "easy-peasy";
+import { useTypedStoreActions } from "./core/hooks";
 import { UserModel } from "./core/stores/users.store";
-import Modal from "./components/create-user-modal";
-import EditUserModal from "./components/edit-user-modal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AlertModal from "./components/alert-modal";
-import { useTypedStoreActions } from "./core/hooks";
+import Modal from "./components/create-user-modal";
+import EditUserModal from "./components/edit-user-modal";
 
 function App() {
   const users = useStoreState((state: UserModel) => state.users);
@@ -54,12 +54,6 @@ function App() {
                       <TableCell>{item.email}</TableCell>
                       <TableCell className="space-x-4">
                         <EditUserModal userData={item} />
-                        {/* <Button
-                          variant="destructive"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          Apagar
-                        </Button> */}
                         <AlertModal userId={item.id} />
                       </TableCell>
                     </TableRow>

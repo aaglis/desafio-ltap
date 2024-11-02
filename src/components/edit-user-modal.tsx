@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { IEditUserModalProps } from "@/core/interfaces/user.interface";
 import {
   Dialog,
   DialogClose,
@@ -15,6 +14,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { toast } from "react-toastify";
 import { useTypedStoreActions } from "@/core/hooks";
+import { IEditUserModalProps } from "@/core/interfaces/user.interface";
 
 function EditUserModal({ userData }: IEditUserModalProps) {
   const [formData, setFormData] = useState({

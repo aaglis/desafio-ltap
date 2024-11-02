@@ -10,16 +10,12 @@ export const getUsers = async () => {
 
 export const createUser = async (userData: { name: string; email: string }) => {
   const { data } = await axios.post(API_URL, userData);
-  console.log(data);
   return data;
 };
 
-export const updateUser = async (
-  userId: number,
-  userData: { id: number; name: string; email: string },
-) => {
-  const { data } = await axios.put(`${API_URL}/${userId}`, userData);
-  console.log("usuario foi atualizado com sucesso:", data);
+export const updateUser = async (userData: IUser) => {
+  const { data } = await axios.put(`${API_URL}/${userData.id}`, userData);
+  return data;
 };
 
 export const deleteUser = async (id: number) => {

@@ -33,7 +33,6 @@ function Modal() {
     try {
       await addUser(formData);
       setFormData({ name: "", email: "" });
-      console.log("chamou o queridinho que tá dando problema");
       toast.success("Usuário criado com suceesso!");
     } catch (err) {
       console.log(err);
