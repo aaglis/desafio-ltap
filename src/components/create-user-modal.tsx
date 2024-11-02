@@ -17,11 +17,11 @@ import { useTypedStoreActions } from "@/core/hooks";
 
 function Modal() {
   const [formData, setFormData] = useState({ name: "", email: "" });
+  const [isOpen, setIsOpen] = useState(false);
   const addUser = useTypedStoreActions((actions) => actions.addUser);
 
   function handleChange(e: any) {
     const { name, value } = e.target;
-
     setFormData({
       ...formData,
       [name]: value,
@@ -33,7 +33,8 @@ function Modal() {
     try {
       await addUser(formData);
       setFormData({ name: "", email: "" });
-      toast.success("Usuário criado com suceesso!");
+      toast.success("Usuário criado com sucesso!");
+      setIsOpen(false);
     } catch (err) {
       console.log(err);
       toast.error("Erro ao criar um usuário.");
@@ -41,55 +42,57 @@ function Modal() {
   }
 
   return (
-    <>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button>Adicionar Usuário</Button>
-        </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button onClick={() => setIsOpen(true)}>Adicionar Usuário</Button>
+      </DialogTrigger>
 
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Adicionar Usuário</DialogTitle>
-            <DialogDescription>
-              Todos os campos são obrigatórios
-            </DialogDescription>
-          </DialogHeader>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Adicionar Usuário</DialogTitle>
+          <DialogDescription>
+            Todos os campos são obrigatórios
+          </DialogDescription>
+        </DialogHeader>
 
-          <form className="space-y-3" onSubmit={submitForm}>
-            <div>
-              <Label htmlFor="name">Nome</Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
+        <form className="space-y-3" onSubmit={submitForm}>
+          <div>
+            <Label htmlFor="name">Nome</Label>
+            <Input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
 
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="text"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="text"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
 
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="ghost">
-                  Cancelar
-                </Button>
-              </DialogClose>
-              <Button type="submit">Adicionar</Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setIsOpen(false)}
+              >
+                Cancelar
+              </Button>
+            </DialogClose>
+            <Button type="submit">Adicionar</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
 

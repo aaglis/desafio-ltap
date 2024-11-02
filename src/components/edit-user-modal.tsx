@@ -17,6 +17,7 @@ import { useTypedStoreActions } from "@/core/hooks";
 import { IEditUserModalProps } from "@/core/interfaces/user.interface";
 
 function EditUserModal({ userData }: IEditUserModalProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: userData.name,
     email: userData.email,
@@ -38,6 +39,7 @@ function EditUserModal({ userData }: IEditUserModalProps) {
     try {
       await updateUser({ ...formData, id: userData.id });
       toast.success("Usuário atualizado com suceesso!");
+      setIsOpen(false);
     } catch (err) {
       console.log(err);
       toast.error("Erro ao atualizar um usuário.");
@@ -46,9 +48,9 @@ function EditUserModal({ userData }: IEditUserModalProps) {
 
   return (
     <>
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button>Editar</Button>
+          <Button onClick={() => setIsOpen(true)}>Editar</Button>
         </DialogTrigger>
 
         <DialogContent>
@@ -84,7 +86,11 @@ function EditUserModal({ userData }: IEditUserModalProps) {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="button" variant="ghost">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setIsOpen(false)}
+                >
                   Cancelar
                 </Button>
               </DialogClose>

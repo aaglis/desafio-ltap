@@ -52,7 +52,7 @@ function App() {
                       <TableCell>{item.id}</TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.email}</TableCell>
-                      <TableCell className="flex space-x-4">
+                      <TableCell className="flex justify-center space-x-4">
                         <EditUserModal userData={item} />
                         <AlertModal userId={item.id} />
                       </TableCell>
