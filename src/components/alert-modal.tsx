@@ -1,4 +1,3 @@
-import { useStoreActions } from "easy-peasy";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,17 +10,15 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
-import { UserModel } from "@/core/stores/users.store";
 import { toast } from "react-toastify";
+import { useTypedStoreActions } from "@/core/hooks";
 
 interface IModalProps {
   userId: number;
 }
 
 function AlertModal({ userId }: IModalProps) {
-  const deleteUser = useStoreActions(
-    (actions: UserModel) => actions.removeUser,
-  );
+  const deleteUser = useTypedStoreActions((actions) => actions.removeUser);
 
   const handleDelete = async () => {
     try {

@@ -21,12 +21,13 @@ const userModel: UserModel = {
   setUsers: action((state, users) => {
     state.users = users;
   }),
+
   fetchUsers: thunk(async (actions) => {
     const data = await getUsers();
     actions.setUsers(data);
   }),
 
-  addUser: thunk(async (actions, newUser: IUser, { getState }) => {
+  addUser: thunk(async (actions, newUser, { getState }) => {
     const createdUser = await createUser(newUser);
     const currentUsers = getState().users;
     actions.setUsers([...currentUsers, createdUser]);
@@ -42,7 +43,7 @@ const userModel: UserModel = {
     );
   }),
 
-  removeUser: thunk(async (actions, userId: number, { getState }) => {
+  removeUser: thunk(async (actions, userId, { getState }) => {
     await deleteUser(userId);
     const currentUsers = getState().users;
     actions.setUsers(currentUsers.filter((user) => user.id !== userId));

@@ -7,20 +7,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "./components/ui/button";
-import { useStoreActions, useStoreState } from "easy-peasy";
+import { useStoreState } from "easy-peasy";
 import { UserModel } from "./core/stores/users.store";
 import Modal from "./components/create-user-modal";
 import EditUserModal from "./components/edit-user-modal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AlertModal from "./components/alert-modal";
+import { useTypedStoreActions } from "./core/hooks";
 
 function App() {
   const users = useStoreState((state: UserModel) => state.users);
-  const fetchUsers = useStoreActions(
-    (actions: UserModel) => actions.fetchUsers,
-  );
+  const fetchUsers = useTypedStoreActions((actions) => actions.fetchUsers);
 
   useEffect(() => {
     fetchUsers();

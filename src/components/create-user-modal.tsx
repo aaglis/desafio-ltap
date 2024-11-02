@@ -12,13 +12,12 @@ import {
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { UserModel } from "@/core/stores/users.store";
-import { useStoreActions } from "easy-peasy";
 import { toast } from "react-toastify";
+import { useTypedStoreActions } from "@/core/hooks";
 
 function Modal() {
   const [formData, setFormData] = useState({ name: "", email: "" });
-  const addUser = useStoreActions((actions: UserModel) => actions.addUser);
+  const addUser = useTypedStoreActions((actions) => actions.addUser);
 
   function handleChange(e: any) {
     const { name, value } = e.target;

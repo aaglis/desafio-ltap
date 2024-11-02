@@ -13,18 +13,15 @@ import {
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { UserModel } from "@/core/stores/users.store";
-import { useStoreActions } from "easy-peasy";
 import { toast } from "react-toastify";
+import { useTypedStoreActions } from "@/core/hooks";
 
 function EditUserModal({ userData }: IEditUserModalProps) {
   const [formData, setFormData] = useState({
     name: userData.name,
     email: userData.email,
   });
-  const updateUser = useStoreActions(
-    (actions: UserModel) => actions.updateUser,
-  );
+  const updateUser = useTypedStoreActions((actions) => actions.updateUser);
 
   function handleChange(e: any) {
     const { name, value } = e.target;
