@@ -21,7 +21,7 @@ Este é um teste técnico proposto pela LTAP, que consiste em desenvolver uma ap
 
 ## Preview
 
-<img width="1500px" height="350px" src="./preview.gif"></img>
+<img width="1500px" height="400px" src="./preview.gif"></img>
 
 ## Instalação do Projeto
 ```sh
