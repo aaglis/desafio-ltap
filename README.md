@@ -21,12 +21,12 @@ Este é um teste técnico proposto pela LTAP, que consiste em desenvolver uma ap
 
 ## Preview
 
-<img width="1500px" height="500px" src="./preview.gif"></img>
+<img width="1500px" height="350px" src="./preview.gif"></img>
 
 ## Instalação do Projeto
 ```sh
 # 1. Clone o repositório na sua máquina
-git clone https://github.com/aaglis/clone-tiktok.git
+git clone https://github.com/aaglis/desafio-ltap.git
 ```
 
 ```bash
