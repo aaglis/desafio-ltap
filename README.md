@@ -1,50 +1,51 @@
-# React + TypeScript + Vite
+# Teste LTAP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um teste técnico proposto pela LTAP, que consiste em desenvolver uma aplicação que implemente um crud simples, para uma entidade qualquer, fazendo as requisições para uma api publica.
 
-Currently, two official plugins are available:
+## Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div style="display: flex; align-items: center; gap: 15px">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" style="width: 60px; height: 60px"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" style="width: 60px; height: 60px"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" style="width: 60px; height: 60px"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/axios/axios-plain-wordmark.svg" style="width: 100px; height: 100px"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original-wordmark.svg" style="width: 100px; height: 100px"/>
+</div>
 
-## Expanding the ESLint configuration
+<h4>Também foi usado:</h4>
+<ul>
+  <li>Easy-Peasy para gerenciamento de estados globais</li>
+  <li>Shadcn-UI para desenvolvimento da interface</li>
+  <li>MockAPI pra fazer as requisições do CRUD</li>
+</ul>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Preview
 
-- Configure the top-level `parserOptions` property like this:
+<img width="1500px" height="500px" src="./preview.gif"></img>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Instalação do Projeto
+```sh
+# 1. Clone o repositório na sua máquina
+git clone https://github.com/aaglis/clone-tiktok.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+# 2. Instale as dependências
+npm install
+# or
+yarn install
+# or
+pnpm install
 ```
+
+```bash
+# 3. Rode o projeto
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Agora é só abrir o projeto na porta
+[http://localhost:5173](http://localhost:5173) !
