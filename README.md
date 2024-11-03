@@ -17,6 +17,7 @@ Este é um teste técnico proposto pela LTAP, que consiste em desenvolver uma ap
   <li>Easy-Peasy para gerenciamento de estados globais</li>
   <li>Shadcn-UI para desenvolvimento da interface</li>
   <li>MockAPI pra fazer as requisições do CRUD</li>
+  <li>React Hook Forms e Zod para validação de formulários</li>
 </ul>
 
 ## Preview
