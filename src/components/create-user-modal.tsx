@@ -14,26 +14,36 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { toast } from "react-toastify";
 import { useTypedStoreActions } from "@/core/hooks";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IUser } from "@/core/interfaces/user.interface";
+
+const createUserFormSchema = z.object({
+  name: z.string().min(5, "Nome precisa ter no mínimo 5 caracteres."),
+  email: z
+    .string()
+    .min(1, "O email é obrigatório.")
+    .email("O email digitado é inválido."),
+});
 
 function Modal() {
-  const [formData, setFormData] = useState({ name: "", email: "" });
   const [isOpen, setIsOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IUser>({
+    resolver: zodResolver(createUserFormSchema),
+  });
   const addUser = useTypedStoreActions((actions) => actions.addUser);
 
-  function handleChange(e: any) {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-
-  async function submitForm(e: any) {
-    e.preventDefault();
+  async function createUser(data: IUser) {
     try {
-      await addUser(formData);
-      setFormData({ name: "", email: "" });
+      await addUser(data);
       toast.success("Usuário criado com sucesso!");
+      reset();
       setIsOpen(false);
     } catch (err) {
       console.log(err);
@@ -55,27 +65,25 @@ function Modal() {
           </DialogDescription>
         </DialogHeader>
 
-        <form className="space-y-3" onSubmit={submitForm}>
+        <form className="space-y-3" onSubmit={handleSubmit(createUser)}>
           <div>
             <Label htmlFor="name">Nome</Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+            <Input type="text" id="name" {...register("name")} />
+            {errors.name && (
+              <span className="flex text-red-500 text-sm pt-2">
+                {errors.name.message}
+              </span>
+            )}
           </div>
 
           <div>
             <Label htmlFor="email">Email</Label>
-            <Input
-              type="text"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
+            <Input type="text" id="email" {...register("email")} />
+            {errors.email && (
+              <span className="flex text-red-500 text-sm pt-2">
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
           <DialogFooter>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -14,31 +14,43 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { toast } from "react-toastify";
 import { useTypedStoreActions } from "@/core/hooks";
-import { IEditUserModalProps } from "@/core/interfaces/user.interface";
+import { IEditUserModalProps, IUser } from "@/core/interfaces/user.interface";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const editUserFormSchema = z.object({
+  name: z.string().min(5, "Nome precisa ter no mínimo 5 caracteres."),
+  email: z
+    .string()
+    .min(1, "O email é obrigatório.")
+    .email("O email digitado é inválido."),
+});
 
 function EditUserModal({ userData }: IEditUserModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: userData.name,
-    email: userData.email,
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IUser>({
+    resolver: zodResolver(editUserFormSchema),
   });
   const updateUser = useTypedStoreActions((actions) => actions.updateUser);
 
-  function handleChange(e: any) {
-    const { name, value } = e.target;
+  useEffect(() => {
+    if (isOpen && userData) {
+      reset(userData);
+    }
+  }, [isOpen, userData, reset]);
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-
-  async function editUser(e: any) {
-    e.preventDefault();
-
+  async function editUser(data: IUser) {
     try {
-      await updateUser({ ...formData, id: userData.id });
+      await updateUser({ ...data, id: userData.id });
       toast.success("Usuário atualizado com suceesso!");
+      reset();
       setIsOpen(false);
     } catch (err) {
       console.log(err);
@@ -50,7 +62,9 @@ function EditUserModal({ userData }: IEditUserModalProps) {
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button onClick={() => setIsOpen(true)}>Editar</Button>
+          <Button onClick={() => setIsOpen(true)} variant="outline">
+            Editar
+          </Button>
         </DialogTrigger>
 
         <DialogContent>
@@ -61,27 +75,25 @@ function EditUserModal({ userData }: IEditUserModalProps) {
             </DialogDescription>
           </DialogHeader>
 
-          <form className="space-y-3" onSubmit={editUser}>
+          <form className="space-y-3" onSubmit={handleSubmit(editUser)}>
             <div>
               <Label htmlFor="name">Nome</Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
+              <Input type="text" id="name" {...register("name")} />
+              {errors.name && (
+                <span className="flex text-red-500 text-sm pt-2">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
 
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input
-                type="text"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
+              <Input type="text" id="email" {...register("email")} />
+              {errors.email && (
+                <span className="flex text-red-500 text-sm pt-2">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
 
             <DialogFooter>
